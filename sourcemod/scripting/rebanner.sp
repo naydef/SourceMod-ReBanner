@@ -640,7 +640,7 @@ void RequestClientFingerprint(int client, const char[] file, int id, bool succes
                 return;
         }
 
-        File fingerprintFile = OpenFile(fingerprintDownloadPath, "r");
+        File fingerprintFile = OpenFile(file, "r");
         if(fingerprintFile == null)
                 SetFailState("Could not find fingerprint file on disk! Should never happen?");
 
@@ -650,8 +650,8 @@ void RequestClientFingerprint(int client, const char[] file, int id, bool succes
         char logMessage[128];
         Format(logMessage, sizeof(logMessage), "Received fingerprint %s of client %N. Processing...", clientFingerprint, client);
         WriteLog(logMessage, LogLevel_Debug);
-        while(FileExists(fingerprintDownloadPath))
-                DeleteFile(fingerprintDownloadPath);
+        while(FileExists(file))
+                DeleteFile(file);
 
         ProcessReceivedClientFingerprint(client, clientFingerprint);
 }
